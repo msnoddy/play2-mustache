@@ -1,6 +1,6 @@
 # play2-mustache
 
-__This project is now deprecated__ with play 2.3 . You should look at sbt-web for doing the same things.
+__Clone of original repo__ to make it compatible with play 2.3. 
 
 Use [Mustache](http://mustache.github.com)  templating with [play2](http://www.playframework.org/)
 
@@ -8,28 +8,30 @@ Use [Mustache](http://mustache.github.com)  templating with [play2](http://www.p
 
 * add plugin dependencies in project/plugins.sbt
 
-```
-resolvers += Resolver.url("julienba.github.com", url("http://julienba.github.com/repo/"))(Resolver.ivyStylePatterns)
-addSbtPlugin("org.jba" % "play2-plugins-mustache" % "1.1.3") // play 2.2
-//addSbtPlugin("org.jba" % "play2-plugins-mustache" % "1.1.2") // play 2.1
-// addSbtPlugin("org.jba" % "play2-plugins-mustache" % "1.0.4") // play 2.0
+```sbt
+// play 2.3
+addSbtPlugin("org.jba" % "play2-plugins-mustache" % "1.1.4")
+// play 2.2
+// addSbtPlugin("org.jba" % "play2-plugins-mustache" % "1.1.3") 
+// play 2.1
+// addSbtPlugin("org.jba" % "play2-plugins-mustache" % "1.1.2") 
+// play 2.0
+// addSbtPlugin("org.jba" % "play2-plugins-mustache" % "1.0.4") 
 ```
 
 * add dependencies in build file:
 
-```
+```scala
 val appDependencies = Seq(
-  "org.jba" %% "play2-mustache" % "1.1.3" // play2.2.0
+  "org.jba" %% "play2-mustache" % "1.1.4" // play2.3.0
+  // "org.jba" %% "play2-mustache" % "1.1.3" // play2.2.0
   //"org.jba" %% "play2-mustache" % "1.1.2" // play2.1
   // "org.jba" %% "play2-mustache" % "1.0.4" // play2.0
 )
 
 val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
-  resolvers += Resolver.url("julienba.github.com", url("http://julienba.github.com/repo/"))(Resolver.ivyStylePatterns),
-
   // Mustache settings
   mustacheEntryPoints <<= (sourceDirectory in Compile)(base => base / "assets" / "mustache" ** "*.html"),
-
   mustacheOptions := Seq.empty[String],
   resourceGenerators in Compile <+= MustacheFileCompiler  
 )
@@ -39,7 +41,7 @@ val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).se
 
 * add org.jba.Mustache in default template import or import it in your view files
 
-```
+```scala
 val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
   //Import Mustache in all template
   //templatesImport += "org.jba.Mustache"
@@ -52,13 +54,13 @@ Put your mustache templates in directory `app/assets/mustache/`
 
 ### In scala templating
 
-```
+```scala
 @Mustache.render("YOUR_MUSTACHE_TEMPLATE", content)
 ```
 
 ### In javascript 
 
-```
+```javascript
 // In your main template
 
 <!-- File generate with all your templates in MUSTACHE_TEMPLATES array -->
@@ -75,7 +77,7 @@ Mustache.render(MUSTACHE_TEMPLATES['YOUR_MUSTACHE_TEMPLATE'], content);
 
 create a file conf/play.plugins with something like that inside:
 
-```
+```sbt
 1500:org.jba.MustachePlugin
 ```
 

@@ -1,7 +1,6 @@
 package org.jba.sbt.plugin
 
 import sbt._
-import play.Project._
 
 import play.api._
 

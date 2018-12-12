@@ -3,8 +3,7 @@ package org.jba.sbt.plugin
 import sbt._
 import sbt.NameFilter._
 import Keys._
-import play.Project._
-import org.apache.commons.lang.StringEscapeUtils
+import org.apache.commons.lang3.StringEscapeUtils
 
 object MustachePlugin extends sbt.Plugin {
 
@@ -114,7 +113,7 @@ object MustachePlugin extends sbt.Plugin {
 
     // TODO: iterator...
     for( (key, value) <- templates) {
-      output ++= """'%s' : '%s',""".format(key, StringEscapeUtils.escapeJavaScript(value))
+      output ++= """'%s' : '%s',""".format(key, StringEscapeUtils.escapeEcmaScript(value))
     }
 
     // remove the last comma
