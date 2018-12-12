@@ -4,7 +4,7 @@ import com.github.mustachejava.DefaultMustacheFactory
 import com.twitter.mustache.ScalaObjectHandler
 import java.io.{StringWriter, InputStreamReader}
 
-import org.apache.commons.lang.StringEscapeUtils
+import org.apache.commons.lang3.StringEscapeUtils
 import scala.io.Source
 
 import play.api._
@@ -45,9 +45,13 @@ class JavaMustache extends MustacheAPI{
 
   private def createMustacheFactory = {
     val factory = new DefaultMustacheFactory {
+      override def resolvePartialPath(dir: String, name: String, extension: String) = {
+        name
+      }
       // override for load ressouce with play classloader
       override def getReader(resourceName: String): java.io.Reader  = {
-        Logger("mustache").debug("read in factory: " + rootPath + resourceName + ".html")
+        Logger("mustache").debug("parameter for read in factory: " + rootPath + resourceName + ".html")
+
         val input = Play.current.resourceAsStream(rootPath + resourceName  + ".html").getOrElse(throw new Exception("mustache: could not find template: " + resourceName))
         new InputStreamReader(input)
       }
